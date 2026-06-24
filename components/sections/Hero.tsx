@@ -6,7 +6,7 @@ import Image from "next/image";
 import { Play } from "lucide-react";
 
 const HERO_FALLBACK =
-  "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1920&auto=format&fit=crop";
+  "https://picsum.photos/1920/1080?random=colegio";
 
 export function Hero() {
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
@@ -53,22 +53,20 @@ export function Hero() {
           className="w-full h-full object-cover"
           poster={HERO_FALLBACK}
         >
-          <source
-            src="https://player.vimeo.com/progressive_redirect/playback/360824608/rendition/1080p/file.mp4?loc=external&log_user=0&signature=abc123"
-            type="video/mp4"
-          />
+          <source src="/videos/hero-mock.mp4" type="video/mp4" />
           <Image
             src={HERO_FALLBACK}
             alt="Colegio CCP"
             fill
             className="object-cover"
             priority
+            unoptimized
           />
         </video>
       </div>
 
-      {/* Overlay sutil (sin oscurecer el video) */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+      {/* Overlay sutil — solo un degradado muy ligero en la parte inferior */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
 
       {/* Contenido */}
       <div className="relative z-10 flex flex-col items-center justify-center h-full px-4 text-center text-white">
@@ -82,7 +80,7 @@ export function Hero() {
               transition: { staggerChildren: 0.2, delayChildren: 0.3 },
             },
           }}
-          className="font-heading text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-extrabold leading-tight"
+          className="font-heading text-6xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[10rem] font-extrabold leading-tight"
         >
           {["Crece", "con", "Propósito"].map((word, index) => (
             <motion.span
@@ -97,7 +95,7 @@ export function Hero() {
               }}
               className={`inline-block ${
                 word === "Propósito" ? "text-amber-400" : "text-white"
-              } ${index > 0 ? "ml-2" : ""}`}
+              } ${index > 0 ? "ml-3" : ""}`}
             >
               {word}
             </motion.span>
@@ -108,7 +106,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.8 }}
-          className="text-lg sm:text-xl md:text-2xl lg:text-3xl mt-4 max-w-3xl text-white/90 font-light"
+          className="text-xl sm:text-2xl md:text-3xl lg:text-4xl mt-6 max-w-4xl text-white/90 font-light leading-relaxed"
         >
           Formamos líderes con valores cristianos, innovación STEM y una mente
           abierta al futuro.
@@ -118,7 +116,7 @@ export function Hero() {
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5, delay: 1 }}
-          className="mt-8"
+          className="mt-10"
         >
           <button
             className="group flex items-center gap-3 bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300 px-6 py-3 rounded-full border border-white/30"
