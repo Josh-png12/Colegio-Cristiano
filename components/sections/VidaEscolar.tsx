@@ -13,22 +13,22 @@ export function VidaEscolar() {
   >(null);
 
   return (
-    <section id="vida-escolar" className="py-24 bg-white">
+    <section id="vida-escolar" className="py-16 sm:py-20 lg:py-24 bg-white">
       <div className="container mx-auto px-4 md:px-6">
         {/* Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-10 sm:mb-16">
           <FadeIn>
-            <p className="text-secondary font-heading font-semibold tracking-widest uppercase text-sm mb-3">
+            <p className="text-secondary font-heading font-semibold tracking-widest uppercase text-xs sm:text-sm mb-3">
               Descubre nuestro colegio
             </p>
           </FadeIn>
           <FadeIn delay={0.1}>
-            <h2 className="font-heading text-4xl sm:text-5xl md:text-6xl font-extrabold text-primary mb-4 leading-[1.05]">
+            <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-primary mb-4 leading-[1.05]">
               La vida en el Colegio CCP
             </h2>
           </FadeIn>
           <FadeIn delay={0.2}>
-            <p className="text-lg text-gray-500 max-w-2xl mx-auto">
+            <p className="text-base sm:text-lg text-gray-500 max-w-2xl mx-auto px-2">
               Espacios dinámicos donde la curiosidad, la creatividad y la fe se
               encuentran.
             </p>
@@ -66,8 +66,8 @@ export function VidaEscolar() {
                 />
               </div>
               {/* Hover Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-end p-6">
-                <h3 className="text-white font-heading font-bold text-xl transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+              <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-end p-4 sm:p-6">
+                <h3 className="text-white font-heading font-bold text-lg sm:text-xl transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
                   {item.titulo}
                 </h3>
               </div>
@@ -92,11 +92,11 @@ export function VidaEscolar() {
             <motion.button
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="absolute top-6 right-6 text-white hover:text-secondary transition-colors z-10 bg-white/10 backdrop-blur-sm p-2 rounded-full"
+              className="absolute top-4 right-4 sm:top-6 sm:right-6 text-white hover:text-secondary transition-colors z-10 bg-white/10 backdrop-blur-sm p-2 rounded-full"
               onClick={() => setSelectedImage(null)}
               aria-label="Cerrar galería"
             >
-              <X size={28} />
+              <X size={24} className="sm:size-[28px]" />
             </motion.button>
 
             <div className="relative w-full max-w-5xl aspect-[4/3]">
@@ -114,7 +114,7 @@ export function VidaEscolar() {
             <motion.p
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="absolute bottom-8 text-white font-heading text-2xl font-bold"
+              className="absolute bottom-6 sm:bottom-8 text-white font-heading text-xl sm:text-2xl font-bold px-4 text-center"
             >
               {selectedImage.titulo}
             </motion.p>

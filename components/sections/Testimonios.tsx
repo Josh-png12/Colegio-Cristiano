@@ -8,28 +8,28 @@ import Image from "next/image";
 
 export function Testimonios() {
   return (
-    <section className="py-24 bg-gradient-to-b from-gray-50 to-white relative overflow-hidden">
+    <section className="py-16 sm:py-20 lg:py-24 bg-gradient-to-b from-gray-50 to-white relative overflow-hidden">
       {/* Decorative */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-secondary/5 rounded-full blur-3xl" aria-hidden="true" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] sm:w-[600px] h-[400px] sm:h-[600px] bg-secondary/5 rounded-full blur-3xl" aria-hidden="true" />
 
       <div className="container mx-auto px-4 md:px-6 relative z-10">
-        <div className="text-center mb-16">
+        <div className="text-center mb-10 sm:mb-16">
           <FadeIn>
-            <p className="text-secondary font-heading font-semibold tracking-widest uppercase text-sm mb-3">
+            <p className="text-secondary font-heading font-semibold tracking-widest uppercase text-xs sm:text-sm mb-3">
               Testimonios
             </p>
           </FadeIn>
           <FadeIn delay={0.1}>
-            <h2 className="font-heading text-4xl sm:text-5xl md:text-6xl font-extrabold text-primary mb-4 leading-[1.05]">
+            <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-primary mb-4 leading-[1.05]">
               Lo que dice nuestra comunidad
             </h2>
           </FadeIn>
           <FadeIn delay={0.2}>
-            <div className="w-24 h-1 bg-secondary mx-auto rounded-full" />
+            <div className="w-20 sm:w-24 h-1 bg-secondary mx-auto rounded-full" />
           </FadeIn>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto">
           {testimonios.map((testimonio, index) => (
             <motion.div
               key={testimonio.id}
@@ -41,17 +41,17 @@ export function Testimonios() {
                 delay: index * 0.15,
                 ease: [0.25, 0.4, 0.25, 1],
               }}
-              className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-300 relative group"
+              className="bg-white p-6 sm:p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-300 relative group"
             >
               {/* Quote icon */}
-              <Quote className="absolute top-6 right-6 text-secondary/15 w-16 h-16 group-hover:text-secondary/25 transition-colors duration-300" aria-hidden="true" />
+              <Quote className="absolute top-4 sm:top-6 right-4 sm:right-6 text-secondary/15 w-12 h-12 sm:w-16 sm:h-16 group-hover:text-secondary/25 transition-colors duration-300" aria-hidden="true" />
 
-              <p className="text-gray-600 italic mb-8 relative z-10 text-lg leading-relaxed">
+              <p className="text-gray-600 italic mb-6 sm:mb-8 relative z-10 text-base sm:text-lg leading-relaxed">
                 &ldquo;{testimonio.testimonio}&rdquo;
               </p>
 
-              <div className="flex items-center gap-4">
-                <div className="relative w-14 h-14 flex-shrink-0">
+              <div className="flex items-center gap-3 sm:gap-4">
+                <div className="relative w-12 h-12 sm:w-14 sm:h-14 flex-shrink-0">
                   <Image
                     src={testimonio.foto}
                     alt={testimonio.nombre}
@@ -61,10 +61,10 @@ export function Testimonios() {
                   />
                 </div>
                 <div>
-                  <h4 className="font-heading font-bold text-primary text-lg">
+                  <h4 className="font-heading font-bold text-primary text-base sm:text-lg">
                     {testimonio.nombre}
                   </h4>
-                  <p className="text-secondary text-sm font-medium">
+                  <p className="text-secondary text-xs sm:text-sm font-medium">
                     {testimonio.cargo}
                   </p>
                 </div>

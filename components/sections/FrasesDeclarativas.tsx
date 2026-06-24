@@ -5,11 +5,11 @@ import { frases } from "@/data/mockData";
 
 export function FrasesDeclarativas() {
   return (
-    <section className="relative py-36 md:py-52 bg-primary overflow-hidden">
+    <section className="relative py-24 sm:py-32 md:py-44 lg:py-52 bg-primary overflow-hidden">
       {/* ── SVG Wave Top ── */}
       <div className="absolute top-0 left-0 w-full overflow-hidden leading-none rotate-180">
         <svg
-          className="relative block w-full h-[70px] md:h-[120px]"
+          className="relative block w-full h-[50px] sm:h-[70px] md:h-[120px]"
           viewBox="0 0 1200 120"
           preserveAspectRatio="none"
         >
@@ -23,7 +23,7 @@ export function FrasesDeclarativas() {
       {/* ── SVG Wave Bottom ── */}
       <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-none">
         <svg
-          className="relative block w-full h-[70px] md:h-[120px]"
+          className="relative block w-full h-[50px] sm:h-[70px] md:h-[120px]"
           viewBox="0 0 1200 120"
           preserveAspectRatio="none"
         >
@@ -35,20 +35,20 @@ export function FrasesDeclarativas() {
       </div>
 
       {/* ── Decorative Blurs ── */}
-      <div className="absolute top-20 -left-40 w-[500px] h-[500px] bg-secondary/10 rounded-full blur-[100px]" />
-      <div className="absolute bottom-20 -right-40 w-[500px] h-[500px] bg-sky-400/10 rounded-full blur-[100px]" />
+      <div className="absolute top-20 -left-40 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] bg-secondary/10 rounded-full blur-[80px] sm:blur-[100px]" />
+      <div className="absolute bottom-20 -right-40 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] bg-sky-400/10 rounded-full blur-[80px] sm:blur-[100px]" />
 
       {/* ── Content ── */}
-      <div className="container mx-auto px-4 md:px-6 relative z-10 space-y-20 md:space-y-32">
+      <div className="container mx-auto px-4 md:px-6 relative z-10 space-y-16 sm:space-y-20 md:space-y-32">
         {frases.map((frase, index) => (
           <motion.div
             key={frase.id}
             initial={{
               opacity: 0,
-              x: frase.align === "left" ? -120 : 120,
+              x: frase.align === "left" ? -60 : 60,
             }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-150px" }}
+            viewport={{ once: true, margin: "-100px" }}
             transition={{
               duration: 1,
               delay: index * 0.2,
@@ -58,7 +58,7 @@ export function FrasesDeclarativas() {
               frase.align === "right" ? "text-right" : "text-left"
             }`}
           >
-            <h2 className="font-heading text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-extrabold text-white leading-[1.05] tracking-tight">
+            <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-extrabold text-white leading-[1.05] tracking-tight">
               {frase.texto}
             </h2>
           </motion.div>

@@ -36,15 +36,15 @@ export function Navbar() {
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-white shadow-md text-gray-800 py-3"
-          : "bg-transparent text-white py-5"
+          ? "bg-white shadow-md text-gray-800 py-2 md:py-3"
+          : "bg-transparent text-white py-3 md:py-5"
       }`}
     >
-      <div className="container mx-auto flex justify-between items-center px-4 md:px-6">
+      <div className="max-w-7xl mx-auto flex justify-between items-center px-4 sm:px-6 lg:px-8">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 z-50">
           <div
-            className={`w-10 h-10 rounded-lg flex items-center justify-center font-heading font-extrabold text-lg transition-colors ${
+            className={`w-8 h-8 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center font-heading font-extrabold text-base sm:text-lg transition-colors ${
               scrolled
                 ? "bg-blue-900 text-white"
                 : "bg-white/15 backdrop-blur-sm text-white"
@@ -53,7 +53,7 @@ export function Navbar() {
             C
           </div>
           <span
-            className={`font-heading font-bold text-lg md:text-xl leading-tight ${
+            className={`font-heading font-bold text-base sm:text-lg md:text-xl leading-tight ${
               scrolled ? "text-blue-900" : "text-white"
             }`}
           >
@@ -61,13 +61,13 @@ export function Navbar() {
           </span>
         </Link>
 
-        {/* Desktop Nav */}
-        <ul className="hidden lg:flex items-center gap-8 font-medium">
+        {/* Desktop Nav — visible desde md: */}
+        <ul className="hidden md:flex items-center gap-4 lg:gap-8 font-medium">
           {navLinks.map((link) => (
             <li key={link.name}>
               <Link
                 href={link.href}
-                className={`text-sm tracking-wide transition-colors hover:text-amber-400 ${
+                className={`text-xs lg:text-sm tracking-wide transition-colors hover:text-amber-400 ${
                   scrolled ? "text-gray-600" : "text-white/85"
                 }`}
               >
@@ -78,11 +78,11 @@ export function Navbar() {
         </ul>
 
         {/* CTA Desktop */}
-        <div className="hidden lg:block">
+        <div className="hidden md:block">
           <Link href="/admisiones">
             <Button
               variant={scrolled ? "default" : "accent"}
-              className="rounded-full font-semibold"
+              className="rounded-full font-semibold text-xs lg:text-sm px-4 lg:px-6 py-2"
             >
               Admisiones 2027
             </Button>
@@ -91,7 +91,7 @@ export function Navbar() {
 
         {/* Mobile Toggle */}
         <button
-          className="lg:hidden z-50 p-2"
+          className="md:hidden z-50 p-2"
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label={mobileOpen ? "Cerrar menú" : "Abrir menú"}
         >
@@ -113,9 +113,9 @@ export function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 bg-white z-40 pt-28 px-6 lg:hidden"
+            className="fixed inset-0 bg-white z-40 pt-24 px-6 md:hidden"
           >
-            <ul className="flex flex-col gap-6">
+            <ul className="flex flex-col gap-5">
               {navLinks.map((link, i) => (
                 <motion.li
                   key={link.name}
@@ -125,7 +125,7 @@ export function Navbar() {
                 >
                   <Link
                     href={link.href}
-                    className="text-2xl font-heading font-semibold text-blue-900 hover:text-amber-400 transition-colors"
+                    className="text-xl font-heading font-semibold text-blue-900 hover:text-amber-400 transition-colors"
                     onClick={() => setMobileOpen(false)}
                   >
                     {link.name}
