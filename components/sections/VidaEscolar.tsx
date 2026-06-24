@@ -23,7 +23,7 @@ export function VidaEscolar() {
             </p>
           </FadeIn>
           <FadeIn delay={0.1}>
-            <h2 className="font-heading text-4xl md:text-5xl font-bold text-primary mb-4">
+            <h2 className="font-heading text-4xl sm:text-5xl md:text-6xl font-extrabold text-primary mb-4 leading-[1.05]">
               La vida en el Colegio CCP
             </h2>
           </FadeIn>

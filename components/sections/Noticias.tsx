@@ -20,7 +20,7 @@ export function Noticias() {
               </p>
             </FadeIn>
             <FadeIn direction="right" delay={0.1}>
-              <h2 className="font-heading text-4xl md:text-5xl font-bold text-primary">
+              <h2 className="font-heading text-4xl sm:text-5xl md:text-6xl font-extrabold text-primary leading-[1.05]">
                 Últimas noticias
               </h2>
             </FadeIn>

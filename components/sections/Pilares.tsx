@@ -7,9 +7,9 @@ import { pilares } from "@/data/mockData";
 import { FadeIn } from "@/components/animations/FadeIn";
 
 const iconMap: Record<string, React.ReactNode> = {
-  Cross: <Cross className="w-10 h-10 text-white" />,
-  Brain: <Brain className="w-10 h-10 text-white" />,
-  Rocket: <Rocket className="w-10 h-10 text-white" />,
+  Cross: <Cross className="w-12 h-12 text-white" />,
+  Brain: <Brain className="w-12 h-12 text-white" />,
+  Rocket: <Rocket className="w-12 h-12 text-white" />,
 };
 
 export function Pilares() {
@@ -20,67 +20,69 @@ export function Pilares() {
     offset: ["start start", "end end"],
   });
 
-  // Map vertical scroll progress → horizontal translation
-  // When scrollYProgress goes 0 → 1, we translate from 0% to -66% (3 cards → show all)
   const x = useTransform(scrollYProgress, [0, 1], ["0%", "-66%"]);
 
   return (
     <section
       id="proyecto-educativo"
       ref={sectionRef}
-      className="relative h-[300vh]" // tall container for scroll room
+      className="relative h-[300vh]"
     >
-      <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden">
-        {/* Header stays fixed */}
-        <div className="container mx-auto px-4 md:px-6 pt-12 pb-8">
+      <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden bg-gray-50">
+        {/* Header */}
+        <div className="container mx-auto px-4 md:px-6 pt-14 pb-8">
           <FadeIn>
-            <p className="text-secondary font-heading font-semibold tracking-widest uppercase text-sm mb-3">
+            <p className="text-secondary font-heading font-semibold tracking-[0.2em] uppercase text-sm md:text-base mb-4">
               Nuestro Proyecto Educativo
             </p>
           </FadeIn>
           <FadeIn delay={0.1}>
-            <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-primary leading-tight max-w-2xl">
-              Tres pilares que construyen futuro
+            <h2 className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-primary leading-[1.05] max-w-3xl">
+              Tres pilares que
+              <br />
+              construyen futuro
             </h2>
           </FadeIn>
         </div>
 
-        {/* Horizontal scroll container */}
+        {/* Horizontal scroll cards */}
         <div className="flex-1 flex items-center">
           <motion.div
             style={{ x }}
-            className="flex gap-8 pl-4 md:pl-[max(2rem,calc((100vw-72rem)/2+1rem))]"
+            className="flex gap-6 pl-4 md:pl-[max(2rem,calc((100vw-72rem)/2+1rem))]"
           >
             {pilares.map((pilar) => (
               <motion.div
                 key={pilar.id}
-                whileHover={{ y: -12, scale: 1.02 }}
-                transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                whileHover={{ y: -14, scale: 1.03 }}
+                transition={{ type: "spring", stiffness: 250, damping: 18 }}
                 className={`
-                  relative flex-shrink-0 w-[85vw] md:w-[42vw] lg:w-[30vw]
+                  relative flex-shrink-0 w-[88vw] md:w-[44vw] lg:w-[32vw]
                   bg-gradient-to-br ${pilar.gradient}
-                  rounded-3xl p-10 md:p-12 text-white
-                  shadow-xl hover:shadow-2xl transition-shadow duration-300
-                  flex flex-col justify-between min-h-[340px]
+                  rounded-[2rem] p-10 md:p-14 text-white
+                  shadow-2xl hover:shadow-[0_25px_60px_rgba(0,0,0,0.3)] transition-shadow duration-400
+                  flex flex-col justify-between min-h-[380px] md:min-h-[420px]
+                  cursor-default
                 `}
               >
-                {/* Decorative circle */}
-                <div className="absolute top-6 right-6 w-24 h-24 rounded-full bg-white/10 blur-xl" />
+                {/* Decorative elements */}
+                <div className="absolute top-8 right-8 w-32 h-32 rounded-full bg-white/8 blur-2xl" />
+                <div className="absolute bottom-10 left-10 w-20 h-20 rounded-full bg-white/6 blur-xl" />
 
                 <div className="relative z-10">
-                  <div className="bg-white/20 backdrop-blur-sm w-16 h-16 rounded-2xl flex items-center justify-center mb-6">
+                  <div className="bg-white/20 backdrop-blur-md w-20 h-20 rounded-2xl flex items-center justify-center mb-8 shadow-lg">
                     {iconMap[pilar.icono]}
                   </div>
-                  <h3 className="font-heading text-2xl md:text-3xl font-bold mb-4">
+                  <h3 className="font-heading text-3xl md:text-4xl font-extrabold mb-5 tracking-tight">
                     {pilar.titulo}
                   </h3>
-                  <p className="text-white/85 text-lg leading-relaxed">
+                  <p className="text-white/80 text-lg md:text-xl leading-relaxed max-w-md">
                     {pilar.descripcion}
                   </p>
                 </div>
 
-                {/* Bottom accent line */}
-                <div className="mt-8 w-16 h-1 bg-white/40 rounded-full" />
+                {/* Accent bar */}
+                <div className="mt-10 w-20 h-1.5 bg-white/30 rounded-full" />
               </motion.div>
             ))}
           </motion.div>
