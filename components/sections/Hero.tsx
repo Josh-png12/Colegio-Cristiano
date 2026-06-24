@@ -19,16 +19,44 @@ export function Hero() {
     const handleCanPlay = () => setIsVideoLoaded(true);
     video.addEventListener("canplay", handleCanPlay);
 
-    video.play().catch(() => {});
-    return () => video.removeEventListener("canplay", handleCanPlay);
+    // Reproducción con manejo de promesa
+    const playPromise = video.play();
+    if (playPromise !== undefined) {
+      playPromise
+        .then(() => {
+          setIsVideoLoaded(true);
+        })
+        .catch((error) => {
+          console.log("Error controlado en reproducción automática:", error);
+        });
+    }
+
+    return () => {
+      video.removeEventListener("canplay", handleCanPlay);
+      video.pause();
+      video.src = "";
+      video.load();
+    };
   }, []);
 
   return (
     <section className="relative h-screen w-full overflow-hidden">
-      {/* ── Video de fondo — overlay muy sutil ── */}
+      {/* Video de fondo */}
       <div className="absolute inset-0 w-full h-full">
-        {/* Imagen de respaldo (siempre visible como base) */}
-        {!isVideoLoaded && (
+        <video
+          ref={videoRef}
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          className="w-full h-full object-cover"
+          poster={HERO_FALLBACK}
+        >
+          <source
+            src="https://player.vimeo.com/progressive_redirect/playback/360824608/rendition/1080p/file.mp4?loc=external&log_user=0&signature=abc123"
+            type="video/mp4"
+          />
           <Image
             src={HERO_FALLBACK}
             alt="Colegio CCP"
@@ -36,33 +64,14 @@ export function Hero() {
             className="object-cover"
             priority
           />
-        )}
-
-        {/* Video */}
-        <video
-          ref={videoRef}
-          autoPlay
-          loop
-          muted
-          playsInline
-          className={`w-full h-full object-cover transition-opacity duration-1000 ${
-            isVideoLoaded ? "opacity-100" : "opacity-0"
-          }`}
-          poster={HERO_FALLBACK}
-        >
-          <source
-            src="https://player.vimeo.com/progressive_redirect/playback/360824608/rendition/1080p/file.mp4?loc=external&log_user=0&signature=abc123"
-            type="video/mp4"
-          />
         </video>
       </div>
 
-      {/* ── Overlay muy sutil ── */}
+      {/* Overlay sutil (sin oscurecer el video) */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
 
-      {/* ── Contenido ── */}
+      {/* Contenido */}
       <div className="relative z-10 flex flex-col items-center justify-center h-full px-4 text-center text-white">
-        {/* Título con animación de palabras */}
         <motion.h1
           initial="hidden"
           animate="visible"
@@ -95,18 +104,16 @@ export function Hero() {
           ))}
         </motion.h1>
 
-        {/* Subtítulo */}
         <motion.p
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.8 }}
           className="text-lg sm:text-xl md:text-2xl lg:text-3xl mt-4 max-w-3xl text-white/90 font-light"
         >
-          Formamos líderes con valores cristianos, innovación STEM y
-          una mente abierta al futuro.
+          Formamos líderes con valores cristianos, innovación STEM y una mente
+          abierta al futuro.
         </motion.p>
 
-        {/* Botón "Ver Video Completo" estilo Shady Side */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -116,13 +123,8 @@ export function Hero() {
           <button
             className="group flex items-center gap-3 bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300 px-6 py-3 rounded-full border border-white/30"
             onClick={() => {
-              if (videoRef.current) {
-                videoRef.current.paused
-                  ? videoRef.current.play()
-                  : videoRef.current.pause();
-              }
+              alert("Abrir video");
             }}
-            aria-label="Ver video completo"
           >
             <span className="w-10 h-10 rounded-full bg-amber-400 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
               <Play className="w-5 h-5 text-blue-900 ml-1" />
