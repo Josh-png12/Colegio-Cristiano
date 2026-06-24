@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Button } from "@/components/ui/Button";
 import { ChevronDown } from "lucide-react";
@@ -9,34 +9,15 @@ import Image from "next/image";
 const HERO_IMAGE =
   "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1920&auto=format&fit=crop";
 
+const VIMEO_VIDEO_ID = "360824608";
+
 export function Hero() {
-  const [videoLoaded, setVideoLoaded] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
 
   // Parallax effect on scroll
   const { scrollY } = useScroll();
   const bgY = useTransform(scrollY, [0, 800], ["0%", "25%"]);
   const opacity = useTransform(scrollY, [0, 500], [1, 0.3]);
-
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-
-    const handleCanPlay = () => setVideoLoaded(true);
-    const handleError = () => setVideoLoaded(false);
-
-    video.addEventListener("canplay", handleCanPlay);
-    video.addEventListener("error", handleError);
-
-    // Force play attempt
-    video.play().catch(() => setVideoLoaded(false));
-
-    return () => {
-      video.removeEventListener("canplay", handleCanPlay);
-      video.removeEventListener("error", handleError);
-    };
-  }, []);
 
   return (
     <section
@@ -62,24 +43,17 @@ export function Hero() {
           />
         </motion.div>
 
-        {/* Video overlay — plays on top of image */}
-        <div
-          className={`absolute inset-0 z-[1] transition-opacity duration-1000 ${
-            videoLoaded ? "opacity-100" : "opacity-0"
-          }`}
-        >
-          <video
-            ref={videoRef}
-            autoPlay
-            loop
-            muted
-            playsInline
-            preload="auto"
-            className="w-full h-full object-cover scale-110"
+        {/* Vimeo background video */}
+        <div className="absolute inset-0 z-[1] overflow-hidden">
+          <iframe
+            src={`https://player.vimeo.com/video/${VIMEO_VIDEO_ID}?background=1&autoplay=1&loop=1&byline=0&title=0&portrait=0`}
+            className="absolute top-1/2 left-1/2 min-w-full min-h-full w-auto h-auto -translate-x-1/2 -translate-y-1/2"
+            style={{ border: "none" }}
+            allow="autoplay; fullscreen"
+            allowFullScreen
+            title="Video de fondo"
             aria-hidden="true"
-          >
-            <source src="/videos/hero-mock.mp4" type="video/mp4" />
-          </video>
+          />
         </div>
 
         {/* Strong gradient overlays for text readability */}
