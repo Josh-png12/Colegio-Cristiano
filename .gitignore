@@ -39,3 +39,13 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# ngrok logs
+ngrok.log
+ngrok_cmd.log
+ngrok_url.txt
+ngrok_url_final.txt
+
+# agent config files
+AGENTS.md
+CLAUDE.md
