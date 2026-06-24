@@ -1,34 +1,94 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState, useRef, useEffect } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { Button } from "@/components/ui/Button";
 import { ChevronDown } from "lucide-react";
+import Image from "next/image";
+
+const HERO_IMAGE =
+  "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1920&auto=format&fit=crop";
 
 export function Hero() {
+  const [videoFailed, setVideoFailed] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  // Parallax effect on scroll
+  const { scrollY } = useScroll();
+  const bgY = useTransform(scrollY, [0, 800], ["0%", "25%"]);
+  const opacity = useTransform(scrollY, [0, 500], [1, 0.3]);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    const handleError = () => setVideoFailed(true);
+    video.addEventListener("error", handleError);
+    // Timeout fallback: if video doesn't start playing in 3s, show image
+    const timeout = setTimeout(() => {
+      if (video.paused || video.readyState < 2) setVideoFailed(true);
+    }, 3000);
+    return () => {
+      video.removeEventListener("error", handleError);
+      clearTimeout(timeout);
+    };
+  }, []);
+
   return (
-    <section className="relative h-[100svh] min-h-[600px] w-full flex items-center justify-center overflow-hidden">
-      {/* ── Background ── */}
+    <section
+      ref={sectionRef}
+      className="relative h-[100svh] min-h-[600px] w-full flex items-center justify-center overflow-hidden"
+      aria-label="Hero - Colegio Cristiano Psicopedagógico"
+    >
+      {/* ── Background (image + optional video overlay) ── */}
       <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-b from-primary/80 via-primary/60 to-primary/90 z-10" />
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          poster="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1920&auto=format&fit=crop"
-          className="w-full h-full object-cover"
-        >
-          <source src="/videos/hero-mock.mp4" type="video/mp4" />
-        </video>
+        {/* Parallax image (always visible as base) */}
+        <motion.div style={{ y: bgY }} className="absolute inset-0 will-change-transform">
+          <Image
+            src={HERO_IMAGE}
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover"
+            quality={85}
+          />
+        </motion.div>
+
+        {/* Video overlay (plays on top of image when available) */}
+        {!videoFailed && (
+          <div className="absolute inset-0 z-[1]">
+            <video
+              ref={videoRef}
+              autoPlay
+              loop
+              muted
+              playsInline
+              poster={HERO_IMAGE}
+              className="w-full h-full object-cover"
+              aria-hidden="true"
+            >
+              <source src="/videos/hero-mock.mp4" type="video/mp4" />
+            </video>
+          </div>
+        )}
+
+        {/* Gradient overlays for readability */}
+        <div className="absolute inset-0 z-[2] bg-gradient-to-b from-primary/80 via-primary/50 to-primary/90" />
+        <div className="absolute inset-0 z-[2] bg-gradient-to-r from-primary/30 to-transparent" />
       </div>
 
       {/* ── Content ── */}
-      <div className="container relative z-20 mx-auto px-5 sm:px-6 text-center text-white pt-20 pb-24">
+      <motion.div
+        style={{ opacity }}
+        className="container relative z-20 mx-auto px-5 sm:px-6 text-center text-white pt-20 pb-24"
+      >
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
           className="font-heading text-xs sm:text-sm md:text-lg tracking-[0.2em] sm:tracking-[0.3em] uppercase text-white/70 mb-4 sm:mb-6"
+          role="doc-subtitle"
         >
           Colegio Cristiano Psicopedagógico
         </motion.p>
@@ -69,6 +129,7 @@ export function Hero() {
                 .getElementById("proyecto-educativo")
                 ?.scrollIntoView({ behavior: "smooth" })
             }
+            aria-label="Conoce nuestro proyecto educativo"
           >
             Conócenos
           </Button>
@@ -80,18 +141,20 @@ export function Hero() {
                 .getElementById("admisiones")
                 ?.scrollIntoView({ behavior: "smooth" })
             }
+            aria-label="Ir a admisiones 2027"
           >
             Admisiones 2027
           </Button>
         </motion.div>
-      </div>
+      </motion.div>
 
-      {/* ── Scroll Indicator (hidden on very short screens) ── */}
+      {/* ── Scroll Indicator ── */}
       <motion.div
         className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 z-20 flex-col items-center gap-2 hidden sm:flex"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.2 }}
+        aria-hidden="true"
       >
         <span className="text-white/50 text-xs tracking-widest uppercase">
           Descubre más
@@ -101,7 +164,7 @@ export function Hero() {
           transition={{
             repeat: Infinity,
             duration: 1.8,
-            ease: "easeInOut" as const,
+            ease: "easeInOut",
           }}
         >
           <ChevronDown className="text-white/60 w-6 h-6" />

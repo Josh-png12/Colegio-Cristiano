@@ -3,14 +3,14 @@ import { FaFacebook, FaInstagram, FaYoutube } from "react-icons/fa";
 
 export function Footer() {
   return (
-    <footer className="bg-primary text-white">
+    <footer className="bg-primary text-white" role="contentinfo">
       {/* ── Main Footer ── */}
       <div className="container mx-auto px-4 md:px-6 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Brand */}
           <div className="lg:col-span-2">
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-10 h-10 rounded-lg bg-secondary flex items-center justify-center font-heading font-extrabold text-lg text-white">
+              <div className="w-10 h-10 rounded-lg bg-secondary flex items-center justify-center font-heading font-extrabold text-lg text-white" aria-hidden="true">
                 C
               </div>
               <div>
@@ -33,27 +33,27 @@ export function Footer() {
                 className="bg-white/10 p-2.5 rounded-full hover:bg-secondary transition-colors duration-300"
                 aria-label="Facebook"
               >
-                <FaFacebook size={18} />
+                <FaFacebook size={18} aria-hidden="true" />
               </Link>
               <Link
                 href="#"
                 className="bg-white/10 p-2.5 rounded-full hover:bg-secondary transition-colors duration-300"
                 aria-label="Instagram"
               >
-                <FaInstagram size={18} />
+                <FaInstagram size={18} aria-hidden="true" />
               </Link>
               <Link
                 href="#"
                 className="bg-white/10 p-2.5 rounded-full hover:bg-secondary transition-colors duration-300"
                 aria-label="YouTube"
               >
-                <FaYoutube size={18} />
+                <FaYoutube size={18} aria-hidden="true" />
               </Link>
             </div>
           </div>
 
           {/* Quick Links */}
-          <div>
+          <nav aria-label="Enlaces rápidos">
             <h3 className="font-heading font-semibold text-secondary text-sm tracking-widest uppercase mb-5">
               Enlaces Rápidos
             </h3>
@@ -91,7 +91,7 @@ export function Footer() {
                 </Link>
               </li>
             </ul>
-          </div>
+          </nav>
 
           {/* Contact */}
           <div>
@@ -101,8 +101,16 @@ export function Footer() {
             <address className="not-italic text-white/60 flex flex-col gap-3 text-sm">
               <p>Calle Principal #123</p>
               <p>Ciudad, Colombia</p>
-              <p>+57 300 000 0000</p>
-              <p>info@colegioccp.edu.co</p>
+              <p>
+                <a href="tel:+573000000000" className="hover:text-white transition-colors">
+                  +57 300 000 0000
+                </a>
+              </p>
+              <p>
+                <a href="mailto:info@colegioccp.edu.co" className="hover:text-white transition-colors">
+                  info@colegioccp.edu.co
+                </a>
+              </p>
             </address>
           </div>
         </div>
@@ -112,7 +120,7 @@ export function Footer() {
       <div className="border-t border-white/10">
         <div className="container mx-auto px-4 md:px-6 py-5 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-white/40">
           <p>
-            © 2026 Colegio Cristiano Psicopedagógico. Todos los derechos
+            &copy; {new Date().getFullYear()} Colegio Cristiano Psicopedagógico. Todos los derechos
             reservados.
           </p>
           <div className="flex gap-6">

@@ -9,6 +9,10 @@ import { Button } from "@/components/ui/Button";
 import { FadeIn } from "@/components/animations/FadeIn";
 import { Send, CheckCircle } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
+
+const ADMISIONES_BG =
+  "https://images.unsplash.com/photo-1571260899304-42507011ec70?q=80&w=1920&auto=format&fit=crop";
 
 const formSchema = z.object({
   nombre: z.string().min(2, "El nombre es muy corto"),
@@ -43,10 +47,14 @@ export function Admisiones() {
     <section id="admisiones" className="py-24 relative overflow-hidden">
       {/* Background with parallax image */}
       <div className="absolute inset-0 z-0">
-        <img
-          src="https://images.unsplash.com/photo-1571260899304-42507011ec70?q=80&w=1920&auto=format&fit=crop"
-          alt="Admisiones"
-          className="w-full h-full object-cover"
+        <Image
+          src={ADMISIONES_BG}
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover"
+          quality={80}
+          priority={false}
         />
         <div className="absolute inset-0 bg-gradient-to-br from-primary/95 via-primary/90 to-primary/80" />
       </div>
@@ -103,8 +111,10 @@ export function Admisiones() {
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   className="bg-emerald-50 border border-emerald-200 text-emerald-700 px-4 py-3 rounded-xl mb-6 flex items-center gap-3"
+                  role="status"
+                  aria-live="polite"
                 >
-                  <CheckCircle size={20} />
+                  <CheckCircle size={20} aria-hidden="true" />
                   <span className="font-medium">
                     ¡Mensaje enviado! Nos pondremos en contacto pronto.
                   </span>
@@ -114,56 +124,76 @@ export function Admisiones() {
               <form
                 onSubmit={handleSubmit(onSubmit)}
                 className="space-y-5"
+                noValidate
               >
                 <div>
+                  <label htmlFor="adm-nombre" className="sr-only">
+                    Nombre completo
+                  </label>
                   <input
+                    id="adm-nombre"
                     {...register("nombre")}
                     placeholder="Nombre completo"
+                    autoComplete="name"
                     className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition-all text-gray-800 placeholder:text-gray-400"
                   />
                   {errors.nombre && (
-                    <p className="text-red-500 text-xs mt-1">
+                    <p className="text-red-500 text-xs mt-1" role="alert">
                       {errors.nombre.message}
                     </p>
                   )}
                 </div>
 
                 <div>
+                  <label htmlFor="adm-email" className="sr-only">
+                    Correo electrónico
+                  </label>
                   <input
+                    id="adm-email"
                     {...register("email")}
                     type="email"
                     placeholder="Correo electrónico"
+                    autoComplete="email"
                     className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition-all text-gray-800 placeholder:text-gray-400"
                   />
                   {errors.email && (
-                    <p className="text-red-500 text-xs mt-1">
+                    <p className="text-red-500 text-xs mt-1" role="alert">
                       {errors.email.message}
                     </p>
                   )}
                 </div>
 
                 <div>
+                  <label htmlFor="adm-telefono" className="sr-only">
+                    Teléfono
+                  </label>
                   <input
+                    id="adm-telefono"
                     {...register("telefono")}
                     placeholder="Teléfono (+57 300 000 0000)"
+                    autoComplete="tel"
                     className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition-all text-gray-800 placeholder:text-gray-400"
                   />
                   {errors.telefono && (
-                    <p className="text-red-500 text-xs mt-1">
+                    <p className="text-red-500 text-xs mt-1" role="alert">
                       {errors.telefono.message}
                     </p>
                   )}
                 </div>
 
                 <div>
+                  <label htmlFor="adm-mensaje" className="sr-only">
+                    Mensaje
+                  </label>
                   <textarea
+                    id="adm-mensaje"
                     {...register("mensaje")}
                     rows={4}
                     placeholder="¿En qué te podemos ayudar?"
                     className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition-all resize-none text-gray-800 placeholder:text-gray-400"
                   />
                   {errors.mensaje && (
-                    <p className="text-red-500 text-xs mt-1">
+                    <p className="text-red-500 text-xs mt-1" role="alert">
                       {errors.mensaje.message}
                     </p>
                   )}
@@ -183,7 +213,7 @@ export function Admisiones() {
                     </>
                   ) : (
                     <>
-                      <Send size={18} />
+                      <Send size={18} aria-hidden="true" />
                       Enviar mensaje
                     </>
                   )}

@@ -5,6 +5,7 @@ import { useState } from "react";
 import { X } from "lucide-react";
 import { galeria } from "@/data/mockData";
 import { FadeIn } from "@/components/animations/FadeIn";
+import Image from "next/image";
 
 export function VidaEscolar() {
   const [selectedImage, setSelectedImage] = useState<
@@ -45,12 +46,25 @@ export function VidaEscolar() {
               transition={{ duration: 0.5, delay: index * 0.08 }}
               className="relative group cursor-pointer overflow-hidden rounded-2xl break-inside-avoid"
               onClick={() => setSelectedImage(item)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  setSelectedImage(item);
+                }
+              }}
+              aria-label={`Ver imagen: ${item.titulo}`}
             >
-              <img
-                src={item.url}
-                alt={item.titulo}
-                className={`w-full object-cover ${item.height} transition-transform duration-700 group-hover:scale-110`}
-              />
+              <div className={`relative w-full ${item.height}`}>
+                <Image
+                  src={item.url}
+                  alt={item.titulo}
+                  fill
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  className="object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+              </div>
               {/* Hover Overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-end p-6">
                 <h3 className="text-white font-heading font-bold text-xl transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
@@ -71,25 +85,31 @@ export function VidaEscolar() {
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 backdrop-blur-sm"
             onClick={() => setSelectedImage(null)}
+            role="dialog"
+            aria-modal="true"
+            aria-label={selectedImage.titulo}
           >
             <motion.button
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               className="absolute top-6 right-6 text-white hover:text-secondary transition-colors z-10 bg-white/10 backdrop-blur-sm p-2 rounded-full"
               onClick={() => setSelectedImage(null)}
+              aria-label="Cerrar galería"
             >
               <X size={28} />
             </motion.button>
 
-            <motion.img
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              src={selectedImage.url.replace("w=600", "w=1400")}
-              alt={selectedImage.titulo}
-              className="max-w-full max-h-[85vh] object-contain rounded-xl"
-              onClick={(e) => e.stopPropagation()}
-            />
+            <div className="relative w-full max-w-5xl aspect-[4/3]">
+              <Image
+                src={selectedImage.url.replace("w=800", "w=1400")}
+                alt={selectedImage.titulo}
+                fill
+                sizes="90vw"
+                className="object-contain rounded-xl"
+                onClick={(e) => e.stopPropagation()}
+                priority
+              />
+            </div>
 
             <motion.p
               initial={{ opacity: 0, y: 10 }}
